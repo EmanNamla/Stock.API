@@ -111,13 +111,13 @@ namespace Stock.API.Controllers
 
                 // Map the properties from itemToReturnDto to existingItem
                 mapper.Map(itemToReturnDto, existingItem);
-                //mapper.Map<Item, ItemToReturnDto>(existingItem);
+        
 
                 // Update item details
                 unitofwork.Repository<Item>().Update(existingItem);
 
                 await unitofwork.CompleteAsync();
-
+                //Get WithSpecifications
                 var updatedItemWithSpec = await unitofwork.Repository<Item>().GetByIdEntitySpecAsync(spec);
 
                 var returnItem = mapper.Map<Item, ItemDto>(updatedItemWithSpec);
@@ -132,50 +132,7 @@ namespace Stock.API.Controllers
                 return StatusCode(500, new APIResponse(500, $"Internal Server Error: {ex.Message}"));
             }
         }
-        //public async Task<IActionResult> Update(int id, [FromForm] ItemToReturnDto itemToReturnDto)
-        //{
-        //    try
-        //    {
-        //        var existingitem = await unitofwork.Repository<Item>().GetByIdAsync(id);
-
-        //        if (existingitem == null)
-        //        {
-        //            return NotFound(new APIResponse(404, "Item Not Found"));
-        //        }
-
-        //        if (itemToReturnDto.Image is not null)
-        //        {
-        //            // Upload the new image
-        //            itemToReturnDto.ImageName = DocumentSettings.UploadFile(itemToReturnDto.Image, "Images");
-
-        //            // Delete the image 
-        //            if (!string.IsNullOrEmpty(existingitem.ImageName))
-        //            {
-        //                DocumentSettings.DeleteFile(existingitem.ImageName, "Images");
-
-        //            }
-        //        }
-        //      //  unitofwork.Repository<Item>().Detach(existingitem);
-
-        //        // Update  Item details
-        //        var mappedItem = mapper.Map<ItemToReturnDto, Item>(itemToReturnDto);
-        //        //mapper.Map(itemToReturnDto, existingitem);
-        //        unitofwork.Repository<Item>().Update(mappedItem);
-        //        await unitofwork.CompleteAsync();
-
-
-        //        var response = new APIResponse(200, "Item Successfully Updated.");
-
-        //        return Ok(new { mappedItem, response });
-
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        // Handle any unexpected exceptions
-        //        return StatusCode(500, new APIResponse(500, $"Internal Server Error: {ex.Message}"));
-        //    }
-        //}
+       
         #endregion
 
         #region EndPoint DeleteItem
