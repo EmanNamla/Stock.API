@@ -16,8 +16,10 @@
         public double Price { get; set; }
         public int ItemTypeId { get; set; }
 
-
+        public string ItemTypeName { get; set; }
         public int SupplierId { get; set; }
+
+        public string SupplierName { get; set; }
 
     }
 }

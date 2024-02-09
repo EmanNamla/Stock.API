@@ -14,5 +14,10 @@ namespace Stock.Core.Specifications
             Includes.Add(i => i.Supplier);
             Includes.Add(i => i.ItemType);
         }
+        public ItemsWithItemTypesandSupplierSpecification(int id):base(i=>i.Id==id)
+        {
+            Includes.Add(i => i.Supplier);
+            Includes.Add(i => i.ItemType);
+        }
     }
 }
